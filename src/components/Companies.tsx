@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Tools, Trash } from '@styled-icons/entypo';
+import SmButton from './Utils/SmButton';
 
 type Props = {
   companies: Companies[];
@@ -13,30 +13,6 @@ type Companies = {
   users: number;
 };
 
-type ButtonProps = {
-  bgcolor?: string;
-  color?: string;
-  hover?: string;
-};
-
-const Button = styled.button<ButtonProps>`
-  width: 30px;
-  height: 30px;
-  background-color: ${(props) => props.bgcolor || '#31acc7'};
-  color: ${(props) => props.color || '#FFF'};
-  border-radius: 8px;
-  padding: 5px;
-  margin: 4px;
-  border: none;
-  display: inline;
-  align-items: center;
-  justify-content: center;
-
-  &:hover {
-    background-color: ${(props) => props.hover || '#268196'};
-  }
-`;
-
 function Users({ companies }: Props) {
   return (
     <tbody>
@@ -47,12 +23,12 @@ function Users({ companies }: Props) {
           <td>{company.description}</td>
           <td>{company.users}</td>
           <td>
-            <Button>
+            <SmButton>
               <Tools />
-            </Button>
-            <Button hover="#961313" bgcolor="#D21F1F">
+            </SmButton>
+            <SmButton hover="#961313" bgcolor="#D21F1F">
               <Trash />
-            </Button>
+            </SmButton>
           </td>
         </tr>
       ))}

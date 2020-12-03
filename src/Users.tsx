@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import NaveBar from './components/NavBar';
-import Container from './components/Container';
-import Title from './components/Title';
+import Container from './components/Utils/Container';
+import Title from './components/Utils/Title';
 import ListUsers from './components/ListUsers';
 import Pagination from './components/Pagination';
-import CreateButton from './components/CreateButton';
+import CreateButton from './components/Utils/CreateButton';
 
 function Users() {
   const [actualPage, setActualPage] = useState<number>(1);
@@ -19,10 +19,17 @@ function Users() {
       { id: 1, fistName: 'Diego', age: 35, companyId: 1 },
       { id: 2, fistName: 'Alex', age: 18, companyId: 2 },
       { id: 3, fistName: 'Sonia', age: 20, companyId: 2 },
-      { id: 4, fistName: 'Marcus', age: 40, companyId: 1 },
+      { id: 4, fistName: 'João', age: 40, companyId: 1 },
       { id: 5, fistName: 'Junior', age: 18, companyId: 4 },
       { id: 6, fistName: 'David', age: 30, companyId: 3 },
       { id: 7, fistName: 'Luis', age: 28, companyId: 3 },
+      { id: 8, fistName: 'Matheus', age: 35, companyId: 1 },
+      { id: 9, fistName: 'Junior', age: 18, companyId: 2 },
+      { id: 10, fistName: 'Robson', age: 20, companyId: 2 },
+      { id: 11, fistName: 'Marcus', age: 40, companyId: 1 },
+      { id: 12, fistName: 'Fatima', age: 18, companyId: 4 },
+      { id: 13, fistName: 'Pedro', age: 30, companyId: 3 },
+      { id: 14, fistName: 'Antonio', age: 28, companyId: 3 },
     ];
     function getUsers() {
       setUsers(data);
@@ -58,12 +65,10 @@ function Users() {
 
   return (
     <div>
-      <NaveBar>
-        <div>Desh Board</div>
-      </NaveBar>
+      <NaveBar />
       <Container>
         <Title>Users</Title>
-        <CreateButton href="/companies" style={{ textAlign: 'right' }}>
+        <CreateButton href="/newuser" style={{ textAlign: 'right' }}>
           New User
         </CreateButton>
         <ListUsers filter={filterId} users={usersInPage} />

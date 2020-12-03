@@ -1,7 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import Users from './Ursers';
-import Table from './Table';
+import Table from './Utils/Table';
+import TD from './Utils/TD';
 
 //->
 
@@ -17,22 +17,12 @@ type User = {
   companyId: number;
 };
 
-const TD = styled.td`
-  color: #556871;
-
-  &:last-child {
-    width: 120px;
-  }
-`;
-
 function ListUsers({ users, filter }: UserProps) {
   return (
     <Table>
       <thead>
-        <TD>
-          <a style={{ cursor: 'pointer' }} onClick={filter}>
-            Id
-          </a>
+        <TD onClick={filter}>
+          <span style={{ cursor: 'pointer' }}>Id</span>
         </TD>
         <TD>Name</TD>
         <TD>Age</TD>
