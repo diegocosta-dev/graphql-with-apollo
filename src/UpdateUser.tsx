@@ -4,13 +4,14 @@ import Contaimer from './components/Utils/Container';
 import { Input, Select, FormButton, FormContainer } from './components/Utils/From';
 import Title from './components/Utils/Title';
 
-function NewUser() {
+function UpdateUser(props: any) {
   const [name, setName] = useState<string>('');
   const [age, setAge] = useState<string>('');
   const [company, setCompany] = useState<string>('1');
 
-  function create(event: any) {
+  function update(event: any) {
     event.preventDefault();
+    console.log(props.match.params.id);
     return;
   }
 
@@ -18,9 +19,9 @@ function NewUser() {
     <>
       <Nav />
       <Contaimer>
-        <Title>Create new user</Title>
+        <Title>Update user</Title>
         <FormContainer>
-          <form onSubmit={create}>
+          <form onSubmit={update}>
             <label htmlFor="name">Name</label>
             <Input
               value={name}
@@ -46,7 +47,7 @@ function NewUser() {
               <option value="3">Google</option>
               <option value="4">Yahoo</option>
             </Select>
-            <FormButton type="submit">Create</FormButton>
+            <FormButton type="submit">Update</FormButton>
           </form>
         </FormContainer>
       </Contaimer>
@@ -54,4 +55,4 @@ function NewUser() {
   );
 }
 
-export default NewUser;
+export default UpdateUser;

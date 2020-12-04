@@ -19,7 +19,7 @@ const ButtonPage = styled.button<PropsButon>`
   width: 30px;
   height: ${(props) => (props.actualPage === props.children ? '35px' : '30px')};
   margin: 1px;
-  background-color: #c4c4c4;
+  background-color: ${(props) => (props.actualPage === props.children ? '#556871' : '#c4c4c4')};
   border: none;
   font-weight: ${(props) => (props.actualPage === props.children ? '900' : '400')};
   color: #fff;

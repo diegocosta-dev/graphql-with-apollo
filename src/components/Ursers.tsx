@@ -23,10 +23,17 @@ function Users({ users }: Props) {
           <td>{user.age}</td>
           <td>{user.companyId}</td>
           <td>
-            <SmButton>
-              <Tools />
-            </SmButton>
-            <SmButton hover="#961313" bgcolor="#D21F1F">
+            <a href={`update/${user.id}`}>
+              <SmButton>
+                <Tools />
+              </SmButton>
+            </a>
+
+            <SmButton
+              onClick={() => window.confirm(`Do you realy want delete ${user.fistName}?`)}
+              hover="#961313"
+              bgcolor="#D21F1F"
+            >
               <Trash />
             </SmButton>
           </td>
