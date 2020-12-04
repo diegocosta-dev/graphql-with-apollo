@@ -21,13 +21,15 @@ function ListUsers({ users, filter }: UserProps) {
   return (
     <Table>
       <thead>
-        <TD onClick={filter}>
-          <span style={{ cursor: 'pointer' }}>Id</span>
-        </TD>
-        <TD>Name</TD>
-        <TD>Age</TD>
-        <TD>Company</TD>
-        <TD>Action</TD>
+        <tr>
+          <TD onClick={filter}>
+            <span style={{ cursor: 'pointer' }}>Id</span>
+          </TD>
+          <TD>Name</TD>
+          <TD>Age</TD>
+          <TD>Company</TD>
+          <TD>Action</TD>
+        </tr>
       </thead>
       <Users users={users} />
     </Table>

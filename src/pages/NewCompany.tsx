@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import Nav from './components/NavBar';
-import Contaimer from './components/Utils/Container';
-import { Input, FormButton, FormContainer } from './components/Utils/From';
-import Title from './components/Utils/Title';
+import Nav from '../components/NavBar';
+import Contaimer from '../components/Utils/Container';
+import { Input, FormButton, FormContainer } from '../components/Utils/From';
+import Title from '../components/Utils/Title';
 
 function NewCompany() {
   const [name, setName] = useState<string>('');

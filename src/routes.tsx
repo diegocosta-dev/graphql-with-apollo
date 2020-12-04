@@ -1,9 +1,9 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Users from './Users';
-import Companies from './Companies';
-import NewUser from './NewUser';
-import NewCompany from './NewCompany';
-import Update from './UpdateUser';
+import Users from './pages/Users';
+import Companies from './pages/Companies';
+import NewUser from './pages/NewUser';
+import NewCompany from './pages/NewCompany';
+import Update from './pages/UpdateUser';
 
 function Router() {
   return (

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import NaveBar from './components/NavBar';
-import Container from './components/Utils/Container';
-import Title from './components/Utils/Title';
-import ListCompanies from './components/ListCompanies';
-import Pagination from './components/Pagination';
-import CreateButton from './components/Utils/CreateButton';
+import NaveBar from '../components/NavBar';
+import Container from '../components/Utils/Container';
+import Title from '../components/Utils/Title';
+import ListCompanies from '../components/ListCompanies';
+import Pagination from '../components/Pagination';
+import CreateButton from '../components/Utils/CreateButton';
 
 function Companies() {
   const [actualPage, setActualPage] = useState<number>(1);
