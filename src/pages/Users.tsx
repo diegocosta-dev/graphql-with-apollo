@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import NaveBar from '../components/NavBar';
 import Container from '../components/Utils/Container';
 import Title from '../components/Utils/Title';
@@ -10,11 +10,11 @@ import { GET_USERS } from '../gql';
 
 function Users() {
   const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(7);
   const [users, setUsers] = useState<any>([]);
   const [filterByID, setFilterByNumber] = useState<boolean>(true);
 
-  const { data, loading, error } = useQuery(GET_USERS, {
+  const { data, loading } = useQuery(GET_USERS, {
     variables: { pagination: { page, limit } },
   });
 

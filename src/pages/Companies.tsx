@@ -5,39 +5,22 @@ import Title from '../components/Utils/Title';
 import ListCompanies from '../components/ListCompanies';
 import Pagination from '../components/Pagination';
 import CreateButton from '../components/Utils/CreateButton';
+import { useQuery } from '@apollo/client';
+import { GET_COMPANIES } from '../gql';
 
 function Companies() {
-  const [actualPage, setActualPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(1);
   const [companies, setCompanies] = useState<any>([]);
   const [filterByID, setFilterByNumber] = useState<boolean>(true);
 
-  const TOTAL_COMPANIES_PER_PAGE = 7;
-  const TOTAL_COMPANIES = companies.length;
-
-  useEffect(() => {
-    const data = [
-      { id: 1, name: 'NetFliox', description: 'NetFlix', users: 1 },
-      { id: 2, name: 'NetFliox', description: 'NetFlix', users: 2 },
-      { id: 3, name: 'NetFliox', description: 'NetFlix', users: 2 },
-      { id: 4, name: 'NetFliox', description: 'NetFlix', users: 1 },
-      { id: 5, name: 'NetFliox', description: 'NetFlix', users: 4 },
-      { id: 6, name: 'NetFliox', description: 'NetFlix', users: 3 },
-      { id: 7, name: 'NetFliox', description: 'NetFlix', users: 3 },
-    ];
-    function getCompanies() {
-      setCompanies(data);
-    }
-    getCompanies();
-  }, []);
+  const { data, loading } = useQuery(GET_COMPANIES, {
+    variables: { pagination: { page, limit } },
+  });
 
   function changePage(page: number) {
-    setActualPage(page);
+    setPage(page);
   }
-
-  const companiesInPage = [...companies].splice(
-    (actualPage - 1) * TOTAL_COMPANIES_PER_PAGE,
-    TOTAL_COMPANIES_PER_PAGE
-  );
 
   function filterId(event: any) {
     event.preventDefault();
@@ -66,13 +49,18 @@ function Companies() {
         <CreateButton href="/newcompany" style={{ textAlign: 'right' }}>
           New Company
         </CreateButton>
-        <ListCompanies filter={filterId} companies={companiesInPage} />
-        <Pagination
-          totalItems={TOTAL_COMPANIES}
-          itemsPerPage={TOTAL_COMPANIES_PER_PAGE}
-          actualPage={actualPage}
-          changePage={changePage}
-        />
+        {loading && <p>Loading...</p>}
+        {data && data.companies && (
+          <>
+            <ListCompanies filter={filterId} companies={data.companies.data} />
+            <Pagination
+              totalItems={data.companies.pagination.totalItems}
+              itemsPerPage={limit}
+              actualPage={page}
+              changePage={changePage}
+            />
+          </>
+        )}
       </Container>
     </div>
   );
