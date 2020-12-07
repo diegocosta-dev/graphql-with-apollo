@@ -5,7 +5,8 @@ import TD from './Utils/TD';
 
 type UserProps = {
   companies: Comp[];
-  filter: (event: any) => void;
+  deleteCompanyByID: (ID: number, name: string) => void;
+  filter?: (event: any) => void;
 };
 
 type Comp = {
@@ -15,7 +16,7 @@ type Comp = {
   users: number;
 };
 
-function ListUsers({ companies, filter }: UserProps) {
+function ListUsers({ companies, filter, deleteCompanyByID }: UserProps) {
   return (
     <Table>
       <thead>
@@ -29,7 +30,7 @@ function ListUsers({ companies, filter }: UserProps) {
           <TD>Action</TD>
         </tr>
       </thead>
-      <Companies companies={companies} />
+      <Companies deleteCompanyByID={deleteCompanyByID} companies={companies} />
     </Table>
   );
 }

@@ -7,6 +7,7 @@ import TD from './Utils/TD';
 
 type UserProps = {
   users: User[];
+  deleteUserByID: (id: number, fistName: string) => void;
   filter?: (event: any) => void;
 };
 
@@ -15,9 +16,14 @@ type User = {
   fistName: string;
   age: number;
   companyId: number;
+  company: Company;
 };
 
-function ListUsers({ users, filter }: UserProps) {
+type Company = {
+  name: string;
+};
+
+function ListUsers({ users, filter, deleteUserByID }: UserProps) {
   return (
     <Table>
       <thead>
@@ -31,7 +37,7 @@ function ListUsers({ users, filter }: UserProps) {
           <TD>Action</TD>
         </tr>
       </thead>
-      <Users users={users} />
+      <Users deleteUserByID={deleteUserByID} users={users} />
     </Table>
   );
 }

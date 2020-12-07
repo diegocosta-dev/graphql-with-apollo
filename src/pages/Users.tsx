@@ -5,40 +5,36 @@ import Title from '../components/Utils/Title';
 import ListUsers from '../components/ListUsers';
 import Pagination from '../components/Pagination';
 import CreateButton from '../components/Utils/CreateButton';
-import { useQuery } from '@apollo/client';
-import { GET_USERS } from '../gql';
+import { useQuery, useMutation } from '@apollo/client';
+import { GET_USERS, DELETE_USER } from '../gql';
 
 function Users() {
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(7);
-  const [users, setUsers] = useState<any>([]);
-  const [filterByID, setFilterByNumber] = useState<boolean>(true);
 
-  const { data, loading } = useQuery(GET_USERS, {
+  const { data, loading, refetch } = useQuery(GET_USERS, {
     variables: { pagination: { page, limit } },
   });
 
   function changePage(page: number) {
     setPage(page);
   }
+  console.log(data);
+  ////////////////////////////////////////////////////////////
+  const [deleteUser] = useMutation(DELETE_USER);
 
-  function filterId(event: any) {
-    event.preventDefault();
-    const listOfUsers = users;
-
-    if (filterByID) {
-      listOfUsers.sort((ID: number, ID2: number) => (ID > ID2 ? 1 : -1));
-      setUsers(listOfUsers);
-      setFilterByNumber(false);
-      return;
+  async function deleteUserByID(ID: number, fistName: string) {
+    const isDelete = window.confirm(`Do you realy want delete ${fistName}?`);
+    if (isDelete) {
+      setPage(1);
+      await deleteUser({
+        variables: {
+          id: ID,
+        },
+      });
+      refetch();
     }
-
-    listOfUsers.sort((ID: number, ID2: number) => (ID < ID2 ? 1 : -1));
-    setUsers(listOfUsers);
-    setFilterByNumber(true);
-    return;
   }
-
   return (
     <div>
       <NaveBar />
@@ -50,7 +46,7 @@ function Users() {
         {loading && <p>Loading</p>}
         {data && data.users && (
           <>
-            <ListUsers filter={filterId} users={data.users.data} />
+            <ListUsers deleteUserByID={deleteUserByID} users={data.users.data} />
             <Pagination
               totalItems={data.users.pagination.totalItems}
               itemsPerPage={limit}

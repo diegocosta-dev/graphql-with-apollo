@@ -4,6 +4,7 @@ import SmButton from './Utils/SmButton';
 
 type Props = {
   users: User[];
+  deleteUserByID: (id: number, fistName: string) => void;
 };
 
 type User = {
@@ -11,9 +12,14 @@ type User = {
   fistName: string;
   age: number;
   companyId: number;
+  company: Company;
 };
 
-function Users({ users }: Props) {
+type Company = {
+  name: string;
+};
+
+function Users({ users, deleteUserByID }: Props) {
   return (
     <tbody>
       {users.map((user) => (
@@ -21,16 +27,16 @@ function Users({ users }: Props) {
           <td>{user.id}</td>
           <td>{user.fistName}</td>
           <td>{user.age}</td>
-          <td>{user.companyId}</td>
+          <td>{user.company.name}</td>
           <td>
-            <a href={`update/${user.id}`}>
+            <a href={`updateuser/${user.id}`}>
               <SmButton>
                 <Tools />
               </SmButton>
             </a>
 
             <SmButton
-              onClick={() => window.confirm(`Do you realy want delete ${user.fistName}?`)}
+              onClick={() => deleteUserByID(user.id, user.fistName)}
               hover="#961313"
               bgcolor="#D21F1F"
             >

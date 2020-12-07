@@ -4,8 +4,8 @@ import Nav from '../components/NavBar';
 import Contaimer from '../components/Utils/Container';
 import { Input, Select, FormButton, FormContainer } from '../components/Utils/From';
 import Title from '../components/Utils/Title';
-import { ADD_USER } from '../gql';
-import { useMutation } from '@apollo/client';
+import { ADD_USER, GET_COMPANIES } from '../gql';
+import { useMutation, useQuery } from '@apollo/client';
 import { ErroMsg } from '../components/Utils/Msgs';
 
 function NewUser() {
@@ -13,9 +13,10 @@ function NewUser() {
   const [age, setAge] = useState<number>(0);
   const [company, setCompany] = useState<number>(0);
   const [isInvalid, setIsInvalid] = useState<boolean>(false);
-  const history = useHistory();
 
-  const [addUser] = useMutation(ADD_USER);
+  const history = useHistory();
+  const [addUser, { loading: loadingAddUser }] = useMutation(ADD_USER);
+  const { data, loading } = useQuery(GET_COMPANIES);
 
   async function create(event: any) {
     event.preventDefault();
@@ -39,6 +40,9 @@ function NewUser() {
     return;
   }
 
+  const isSubmitting = loading || loadingAddUser;
+  const companies = data ? data.companies.data : [];
+
   return (
     <>
       <Nav />
@@ -49,6 +53,7 @@ function NewUser() {
           <form onSubmit={create}>
             <label htmlFor="name">Name</label>
             <Input
+              disabled={isSubmitting}
               value={name}
               onChange={(event) => setName(event.target.value)}
               name="name"
@@ -56,30 +61,28 @@ function NewUser() {
             ></Input>
             <label htmlFor="age">Age</label>
             <Input
+              disabled={isSubmitting}
               value={age}
               onChange={(event) => setAge(parseInt(event.target.value, 10))}
               name="age"
               type="number"
             ></Input>
             <label htmlFor="company">Company</label>
-
-            <Input
-              value={company}
-              name="company"
-              type="number"
-              onChange={(event) => setCompany(parseInt(event.target.value, 10))}
-            ></Input>
-            {/* <Select
+            <Select
+              disabled={isSubmitting}
               name="company"
               value={company}
-              onChange={(event) => setCompany(event.target.value)}
+              onChange={(event) => setCompany(parseInt(event.target.value))}
             >
-              <option value="1">NetFlix</option>
-              <option value="2">Amazon</option>
-              <option value="3">Google</option>
-              <option value="4">Yahoo</option>
-            </Select> */}
-            <FormButton type="submit">Create</FormButton>
+              {companies.map((comp: any) => (
+                <option key={comp.id} value={comp.id}>
+                  {comp.name}
+                </option>
+              ))}
+            </Select>
+            <FormButton disabled={isSubmitting} type="submit">
+              Create
+            </FormButton>
           </form>
         </FormContainer>
       </Contaimer>

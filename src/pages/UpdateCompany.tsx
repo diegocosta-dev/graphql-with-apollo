@@ -1,18 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Nav from '../components/NavBar';
 import Contaimer from '../components/Utils/Container';
 import { Input, FormButton, FormContainer } from '../components/Utils/From';
 import Title from '../components/Utils/Title';
-import { CREATE_COMPANY } from '../gql';
+import { GET_COMPANY_ID, UPDATE_COMPANY } from '../gql';
 import { useMutation, useQuery } from '@apollo/client';
 import { ErroMsg } from '.././components/Utils/Msgs';
 
-function NewCompany() {
+function UpdateCompany() {
+  const { id } = useParams<{ id: string }>();
   const [name, setName] = useState<string>('');
   const [description, setDescripition] = useState<string>('');
   const [isValid, setIsValid] = useState(false);
 
-  const [addCompany] = useMutation(CREATE_COMPANY);
+  const { data, loading } = useQuery(GET_COMPANY_ID, {
+    variables: { id },
+  });
+
+  const [updateComapany] = useMutation(UPDATE_COMPANY);
+
+  useEffect(() => {
+    function setData() {
+      if (data) {
+        setName(data.company.name);
+        setDescripition(data.company.description);
+      }
+    }
+
+    setData();
+  }, [data]);
 
   async function creatNewCompany(event: any) {
     if (name === '' || description === '') {
@@ -20,11 +37,7 @@ function NewCompany() {
       setIsValid(true);
       return;
     }
-
-    const { data } = await addCompany({
-      variables: { company: { name, description } },
-    });
-    console.log(data);
+    await updateComapany({ variables: { id, name, description } });
     return;
   }
 
@@ -33,7 +46,7 @@ function NewCompany() {
       <Nav />
       <ErroMsg show={isValid}>Erro! Preencha os campos corretamente!</ErroMsg>
       <Contaimer>
-        <Title>Create new company</Title>
+        <Title>Update new company</Title>
         <FormContainer>
           <form onSubmit={creatNewCompany} action="/companies">
             <label htmlFor="name">Name</label>
@@ -50,7 +63,7 @@ function NewCompany() {
               name="description"
               type="text"
             ></Input>
-            <FormButton type="submit">Create</FormButton>
+            <FormButton type="submit">Update</FormButton>
           </form>
         </FormContainer>
       </Contaimer>
@@ -58,4 +71,4 @@ function NewCompany() {
   );
 }
 
-export default NewCompany;
+export default UpdateCompany;
