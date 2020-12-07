@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import NaveBar from '../components/NavBar';
 import Container from '../components/Utils/Container';
 import Title from '../components/Utils/Title';
@@ -10,7 +10,7 @@ import { GET_COMPANIES } from '../gql';
 
 function Companies() {
   const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(7);
   const [companies, setCompanies] = useState<any>([]);
   const [filterByID, setFilterByNumber] = useState<boolean>(true);
 

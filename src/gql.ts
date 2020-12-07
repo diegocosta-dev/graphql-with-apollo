@@ -36,13 +36,33 @@ const GET_COMPANIES = gql`
 `;
 
 const CREATE_COMPANY = gql`
-  mutation crateCompany($createCompay: CompanyInput) {
-    addCompany(name: "NetFlix", description: "asasas") {
+  mutation createCompany($company: AddCompanyInput) {
+    addCompany(company: $company) {
       id
       name
       description
+      users {
+        id
+        fistName
+        age
+      }
     }
   }
 `;
 
-export { GET_USERS, GET_COMPANIES };
+const ADD_USER = gql`
+  mutation addUser($fistName: String!, $age: Int!, $company: UserCompanyInput) {
+    addUser(fistName: $fistName, age: $age, company: $company) {
+      id
+      fistName
+      age
+      company {
+        id
+        name
+        description
+      }
+    }
+  }
+`;
+
+export { GET_USERS, GET_COMPANIES, CREATE_COMPANY, ADD_USER };
