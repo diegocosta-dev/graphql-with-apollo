@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+type Props = {
+  active?: boolean;
+};
+
 const NavLogo = styled.div`
   color: #ffffff;
   display: inline-block;
@@ -21,8 +25,8 @@ const NavButtons = styled.div`
   width: 100%;
 `;
 
-const NavButton = styled.a`
-  color: #ffffff;
+const NavButton = styled.a<Props>`
+  color: ${(props) => (props.active ? '#baf3ff' : '#ffffff')};
   margin-left: 10px;
   text-decoration: none;
   font-weight: 500;

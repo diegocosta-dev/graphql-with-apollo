@@ -35,10 +35,10 @@ function Companies() {
 
   return (
     <div>
-      <NaveBar>
+      <NaveBar activeCompany={true}>
         <div>Desh Board</div>
       </NaveBar>
-      <Container>
+      <Container style={{ height: '400px' }}>
         <Title>Companies</Title>
         <CreateButton href="/newcompany" style={{ textAlign: 'right' }}>
           New Company
@@ -47,15 +47,18 @@ function Companies() {
         {data && data.companies && (
           <>
             <ListCompanies deleteCompanyByID={deleteCompanyByID} companies={data.companies.data} />
-            <Pagination
-              totalItems={data.companies.pagination.totalItems}
-              itemsPerPage={limit}
-              actualPage={page}
-              changePage={changePage}
-            />
           </>
         )}
       </Container>
+      {loading && <p>Loading...</p>}
+      {data && data.companies && (
+        <Pagination
+          totalItems={data.companies.pagination.totalItems}
+          itemsPerPage={limit}
+          actualPage={page}
+          changePage={changePage}
+        />
+      )}
     </div>
   );
 }

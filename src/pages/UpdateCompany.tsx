@@ -18,7 +18,7 @@ function UpdateCompany() {
     variables: { id },
   });
 
-  const [updateComapany] = useMutation(UPDATE_COMPANY);
+  const [updateCompany] = useMutation(UPDATE_COMPANY);
 
   useEffect(() => {
     function setData() {
@@ -37,7 +37,7 @@ function UpdateCompany() {
       setIsValid(true);
       return;
     }
-    await updateComapany({ variables: { id, name, description } });
+    await updateCompany({ variables: { id, name, description } });
     return;
   }
 

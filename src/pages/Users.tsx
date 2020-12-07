@@ -37,8 +37,8 @@ function Users() {
   }
   return (
     <div>
-      <NaveBar />
-      <Container>
+      <NaveBar activeUser={true} />
+      <Container style={{ height: '400px' }}>
         <Title>Users</Title>
         <CreateButton href="/newuser" style={{ textAlign: 'right' }}>
           New User
@@ -47,15 +47,18 @@ function Users() {
         {data && data.users && (
           <>
             <ListUsers deleteUserByID={deleteUserByID} users={data.users.data} />
-            <Pagination
-              totalItems={data.users.pagination.totalItems}
-              itemsPerPage={limit}
-              actualPage={page}
-              changePage={changePage}
-            />
           </>
         )}
       </Container>
+      {loading && <p></p>}
+      {data && data.users && (
+        <Pagination
+          totalItems={data.users.pagination.totalItems}
+          itemsPerPage={limit}
+          actualPage={page}
+          changePage={changePage}
+        />
+      )}
     </div>
   );
 }

@@ -3,6 +3,8 @@ import { Nav, NavLogo, NavButton, NavButtons } from './Utils/Navs';
 
 type Props = {
   children?: ReactNode;
+  activeUser?: boolean;
+  activeCompany?: boolean;
 };
 
 function NavBar(props: Props) {
@@ -14,8 +16,12 @@ function NavBar(props: Props) {
         </a>
       </NavLogo>
       <NavButtons>
-        <NavButton href="/">User</NavButton>
-        <NavButton href="/companies">Companies</NavButton>
+        <NavButton active={props.activeUser} href="/">
+          User
+        </NavButton>
+        <NavButton active={props.activeCompany} href="/companies">
+          Companies
+        </NavButton>
       </NavButtons>
     </Nav>
   );
